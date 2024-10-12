@@ -7,12 +7,15 @@
   "dependencies": {
   },
   "keywords": [
-    "keyword1",
-    "keyword2"
+    "ZCodeBehind",
+    "code behind",
+    "utility",
+    "productivity",
+    "c#"
   ],
   "author": {
-    "name": "HyundongHwang",
-    "email": "hhd2002@gmail.com",
-    "url": "https://github.com/StreamStudioZebra/ZCodeBehind"
+    "name": "StreamStudio",
+    "email": "stream@stream.app",
+    "url": "https://stream.app"
   }
 }
