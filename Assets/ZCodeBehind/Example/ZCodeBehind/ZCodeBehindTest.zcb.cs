@@ -1,0 +1,156 @@
+// ReSharper disable CheckNamespace
+// ReSharper disable ConvertSwitchStatementToSwitchExpression
+// ReSharper disable InconsistentNaming
+// ReSharper disable NotAccessedField.Local
+// ReSharper disable RedundantUsingDirective
+
+using Object = UnityEngine.Object;
+using Random = System.Random;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
+using Unity.Collections;
+using Unity.VisualScripting;
+using UnityEngine.Android;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.IO;
+using UnityEngine.Networking;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
+using UnityEngine;
+
+// ZCODEBEHIND_SCENE_FILE_LENGTH 24274
+
+public partial class ZCodeBehindTest
+{
+    // ZCODEBEHIND_FIELD_START
+    private (GameObject go, Transform transform) _COMMON;
+    private (GameObject go, Transform transform, Camera camera, AudioListener audioListener, UniversalAdditionalCameraData universalAdditionalCameraData) _mainCam;
+    private (GameObject go, Transform transform, EventSystem eventSystem, StandaloneInputModule standaloneInputModule) _eventSystem;
+    private (GameObject go, Transform transform, ZCodeBehindTest zCodeBehindTest) _mainScript;
+    private (GameObject go, RectTransform rectTransform, Canvas canvas, CanvasScaler canvasScaler, GraphicRaycaster graphicRaycaster) _cvMain;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgBg;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgFg;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgFg123abc456;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _divLine;
+    // ZCODEBEHIND_FIELD_FIN
+    private (GameObject go, RectTransform rectTransform, Image image) _imgZCodeBehindTest;
+
+    private void _InitializeComponent()
+    {
+        var goList = Resources.FindObjectsOfTypeAll<GameObject>();
+
+        foreach (var go in goList)
+        {
+            switch (go.name)
+            {
+                // ZCODEBEHIND_CASE_START
+                case "COMMON":
+                {
+                    if (_COMMON.go != null)
+                        break;
+                    _COMMON.go = go;
+                    _COMMON.transform = go.GetComponent<Transform>();
+                    break;
+                }
+                case "mainCam":
+                {
+                    if (_mainCam.go != null)
+                        break;
+                    _mainCam.go = go;
+                    _mainCam.transform = go.GetComponent<Transform>();
+                    _mainCam.camera = go.GetComponent<Camera>();
+                    _mainCam.audioListener = go.GetComponent<AudioListener>();
+                    _mainCam.universalAdditionalCameraData = go.GetComponent<UniversalAdditionalCameraData>();
+                    break;
+                }
+                case "eventSystem":
+                {
+                    if (_eventSystem.go != null)
+                        break;
+                    _eventSystem.go = go;
+                    _eventSystem.transform = go.GetComponent<Transform>();
+                    _eventSystem.eventSystem = go.GetComponent<EventSystem>();
+                    _eventSystem.standaloneInputModule = go.GetComponent<StandaloneInputModule>();
+                    break;
+                }
+                case "mainScript":
+                {
+                    if (_mainScript.go != null)
+                        break;
+                    _mainScript.go = go;
+                    _mainScript.transform = go.GetComponent<Transform>();
+                    _mainScript.zCodeBehindTest = go.GetComponent<ZCodeBehindTest>();
+                    break;
+                }
+                case "cvMain":
+                {
+                    if (_cvMain.go != null)
+                        break;
+                    _cvMain.go = go;
+                    _cvMain.rectTransform = go.GetComponent<RectTransform>();
+                    _cvMain.canvas = go.GetComponent<Canvas>();
+                    _cvMain.canvasScaler = go.GetComponent<CanvasScaler>();
+                    _cvMain.graphicRaycaster = go.GetComponent<GraphicRaycaster>();
+                    break;
+                }
+                case "imgBg":
+                {
+                    if (_imgBg.go != null)
+                        break;
+                    _imgBg.go = go;
+                    _imgBg.rectTransform = go.GetComponent<RectTransform>();
+                    _imgBg.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _imgBg.image = go.GetComponent<Image>();
+                    break;
+                }
+                case "imgFg":
+                {
+                    if (_imgFg.go != null)
+                        break;
+                    _imgFg.go = go;
+                    _imgFg.rectTransform = go.GetComponent<RectTransform>();
+                    _imgFg.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _imgFg.image = go.GetComponent<Image>();
+                    break;
+                }
+                case "imgFg 123 abc 한글 안돼 456":
+                {
+                    if (_imgFg123abc456.go != null)
+                        break;
+                    _imgFg123abc456.go = go;
+                    _imgFg123abc456.rectTransform = go.GetComponent<RectTransform>();
+                    _imgFg123abc456.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _imgFg123abc456.image = go.GetComponent<Image>();
+                    break;
+                }
+                case "divLine":
+                {
+                    if (_divLine.go != null)
+                        break;
+                    _divLine.go = go;
+                    _divLine.rectTransform = go.GetComponent<RectTransform>();
+                    _divLine.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _divLine.image = go.GetComponent<Image>();
+                    break;
+                }
+                // ZCODEBEHIND_CASE_FIN
+                case "imgZCodeBehindTest":
+                {
+                    if (_imgZCodeBehindTest.go != null)
+                        break;
+                    _imgZCodeBehindTest.go = go;
+                    _imgZCodeBehindTest.rectTransform = go.GetComponent<RectTransform>();
+                    _imgZCodeBehindTest.image = go.GetComponent<Image>();
+                    break;
+                }
+            }
+        }
+    }
+}

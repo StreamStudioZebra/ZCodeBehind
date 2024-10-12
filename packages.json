@@ -1,0 +1,18 @@
+{
+  "name": "app.streamstudio.zcodebehind",
+  "version": "1.0.0",
+  "displayName": "ZCodeBehind",
+  "description": "ZCodeBehind",
+  "unity": "2019.1",
+  "dependencies": {
+  },
+  "keywords": [
+    "keyword1",
+    "keyword2"
+  ],
+  "author": {
+    "name": "HyundongHwang",
+    "email": "hhd2002@gmail.com",
+    "url": "https://github.com/StreamStudioZebra/ZCodeBehind"
+  }
+}
