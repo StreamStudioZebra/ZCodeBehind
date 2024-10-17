@@ -27,7 +27,7 @@ using UnityEngine;
 
 // ZCODEBEHIND_SCENE_FILE_LENGTH -1
 
-public partial class %CLASS_NAME% : MonoBehavior
+public partial class %CLASS_NAME% : MonoBehaviour
 {
     // ZCODEBEHIND_FIELD_START
     // ZCODEBEHIND_FIELD_FIN
