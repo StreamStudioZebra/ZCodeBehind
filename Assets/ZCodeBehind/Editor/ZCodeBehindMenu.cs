@@ -197,6 +197,8 @@ public static class ZCodeBehindMenu
 
             foreach (var comp in compArray)
             {
+                if (comp == null)
+                    continue;
                 Debug.Log($"comp:{comp.GetType().Name}");
                 goCompDict[go.name].Add(comp.GetType().Name);
             }
