@@ -25,8 +25,6 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
 
-// ZCODEBEHIND_SCENE_FILE_LENGTH -1
-
 public partial class %CLASS_NAME% : MonoBehaviour
 {
     // ZCODEBEHIND_FIELD_START
@@ -54,5 +52,10 @@ public partial class %CLASS_NAME% : MonoBehaviour
                 }
             }
         }
+    }
+    
+    private void Start()
+    {
+        _InitializeComponent();
     }
 }

@@ -223,4 +223,9 @@ public partial class ZCodeBehindTest : MonoBehaviour
             }
         }
     }
+    
+    // private void Start()
+    // {
+    //     _InitializeComponent();
+    // }
 }

@@ -20,7 +20,7 @@ public static class ZCodeBehindMenu
     public static async void Sync()
     {
         var scene = SceneManager.GetActiveScene();
-        
+
         if (scene != null)
         {
             Debug.Log($"SYNC_START scene.path:{scene.path}");
@@ -28,9 +28,9 @@ public static class ZCodeBehindMenu
             Debug.Log($"rootGoList:{rootGoList.Length}");
             await _Run(rootGoList, scene.path, false);
         }
-        
+
         var prefab = PrefabStageUtility.GetCurrentPrefabStage();
-        
+
         if (prefab != null)
         {
             Debug.Log($"SYNC_START prefab.assetPath:{prefab.assetPath}");
@@ -72,19 +72,23 @@ public static class ZCodeBehindMenu
         {
             fileLineList = await File.ReadAllLinesAsync(cbPath);
             Debug.Log($"fileLineList:{fileLineList.Length}");
-            var line = fileLineList.First(item => item.Contains("ZCODEBEHIND_SCENE_FILE_LENGTH"));
-            var sceneFileLength = long.Parse(line.Replace("//", "").Replace("ZCODEBEHIND_SCENE_FILE_LENGTH", "").Trim());
-
-            if (sceneFileLength == newFileLength)
-            {
-                Debug.Log($"SCENE_FILE_IS_IDENTICAL_SKIP scenePath:{assetPath}");
-                return;
-            }
         }
         else
         {
             var templatePath = Path.Combine(rootDirPath, "Assets/ZCodeBehind/Editor/ZCodeBehind.cs.template");
-            fileLineList = await File.ReadAllLinesAsync(templatePath);
+
+            if (File.Exists(templatePath))
+            {
+                fileLineList = await File.ReadAllLinesAsync(templatePath);
+            }
+            else
+            {
+                var packCacheDirPath = Path.Combine(Application.dataPath, "..", "Library/PackageCache");
+                packCacheDirPath = Path.GetFullPath(packCacheDirPath);
+                var zcbDirPath = Directory.GetDirectories(packCacheDirPath).FirstOrDefault(dirPath => dirPath.Contains("app.streamstudio.zcodebehind"));
+                templatePath = Path.Join(zcbDirPath, "Editor/ZCodeBehind.cs.template");
+                fileLineList = await File.ReadAllLinesAsync(templatePath);
+            }
 
             var cbDirPath = Path.GetDirectoryName(cbPath);
             Debug.Log($"cbDirPath:{cbDirPath}");
@@ -115,10 +119,10 @@ public static class ZCodeBehindMenu
                 {
                     var goName = kv.Key;
                     var compNameList = kv.Value;
-                    
+
                     if (goName == fileName)
                         goName = "root";
-                    
+
                     var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
                     var fieldLine = "";
                     var pubPrvStr = exportFieldPublic ? "public" : "private";
@@ -150,11 +154,11 @@ public static class ZCodeBehindMenu
                 {
                     var goName = kv.Key;
                     var compNameList = kv.Value;
+                    var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
 
                     if (goName == fileName)
-                        goName = "root";
-                    
-                    var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
+                        goNameClean = "root";
+
                     newFileLineList.Add($"                case \"{goName}\":");
                     newFileLineList.Add($"                {{");
                     newFileLineList.Add($"                    if ({underBarStr}{goNameClean}.go != null)");

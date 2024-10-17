@@ -46,7 +46,7 @@ public partial class ZMyPrefab : MonoBehaviour
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
-                case "root":
+                case "ZMyPrefab":
                 {
                     if (root.go != null)
                         break;
@@ -100,5 +100,10 @@ public partial class ZMyPrefab : MonoBehaviour
                 }
             }
         }
+    }
+    
+    private void Start()
+    {
+        _InitializeComponent();
     }
 }

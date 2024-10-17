@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 3018360026693988795}
   - component: {fileID: 1725137171014530956}
   - component: {fileID: 6379204137011054175}
-  - component: {fileID: 8298530055307925619}
+  - component: {fileID: 8026027403974877629}
   m_Layer: 5
   m_Name: ZMyPrefab
   m_TagString: Untagged
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8298530055307925619
+--- !u!114 &8026027403974877629
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
