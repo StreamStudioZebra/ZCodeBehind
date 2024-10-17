@@ -25,9 +25,9 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
 
-// ZCODEBEHIND_SCENE_FILE_LENGTH 24274
+// ZCODEBEHIND_SCENE_FILE_LENGTH 39266
 
-public partial class ZCodeBehindTest
+public partial class ZCodeBehindTest : MonoBehaviour
 {
     // ZCODEBEHIND_FIELD_START
     private (GameObject go, Transform transform) _COMMON;
@@ -39,6 +39,12 @@ public partial class ZCodeBehindTest
     private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgFg;
     private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgFg123abc456;
     private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _divLine;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image, ZMyPrefab zMyPrefab) _myPrefab_0;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgRed;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgBlue;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Text text, ContentSizeFitter contentSizeFitter) _txtName;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image, ZMyPrefab zMyPrefab) _myPrefab_1;
+    private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image, ZMyPrefab zMyPrefab) _myPrefab_2;
     // ZCODEBEHIND_FIELD_FIN
     private (GameObject go, RectTransform rectTransform, Image image) _imgZCodeBehindTest;
 
@@ -138,6 +144,70 @@ public partial class ZCodeBehindTest
                     _divLine.rectTransform = go.GetComponent<RectTransform>();
                     _divLine.canvasRenderer = go.GetComponent<CanvasRenderer>();
                     _divLine.image = go.GetComponent<Image>();
+                    break;
+                }
+                case "myPrefab_0":
+                {
+                    if (_myPrefab_0.go != null)
+                        break;
+                    _myPrefab_0.go = go;
+                    _myPrefab_0.rectTransform = go.GetComponent<RectTransform>();
+                    _myPrefab_0.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _myPrefab_0.image = go.GetComponent<Image>();
+                    _myPrefab_0.zMyPrefab = go.GetComponent<ZMyPrefab>();
+                    break;
+                }
+                case "imgRed":
+                {
+                    if (_imgRed.go != null)
+                        break;
+                    _imgRed.go = go;
+                    _imgRed.rectTransform = go.GetComponent<RectTransform>();
+                    _imgRed.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _imgRed.image = go.GetComponent<Image>();
+                    break;
+                }
+                case "imgBlue":
+                {
+                    if (_imgBlue.go != null)
+                        break;
+                    _imgBlue.go = go;
+                    _imgBlue.rectTransform = go.GetComponent<RectTransform>();
+                    _imgBlue.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _imgBlue.image = go.GetComponent<Image>();
+                    break;
+                }
+                case "txtName":
+                {
+                    if (_txtName.go != null)
+                        break;
+                    _txtName.go = go;
+                    _txtName.rectTransform = go.GetComponent<RectTransform>();
+                    _txtName.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _txtName.text = go.GetComponent<Text>();
+                    _txtName.contentSizeFitter = go.GetComponent<ContentSizeFitter>();
+                    break;
+                }
+                case "myPrefab_1":
+                {
+                    if (_myPrefab_1.go != null)
+                        break;
+                    _myPrefab_1.go = go;
+                    _myPrefab_1.rectTransform = go.GetComponent<RectTransform>();
+                    _myPrefab_1.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _myPrefab_1.image = go.GetComponent<Image>();
+                    _myPrefab_1.zMyPrefab = go.GetComponent<ZMyPrefab>();
+                    break;
+                }
+                case "myPrefab_2":
+                {
+                    if (_myPrefab_2.go != null)
+                        break;
+                    _myPrefab_2.go = go;
+                    _myPrefab_2.rectTransform = go.GetComponent<RectTransform>();
+                    _myPrefab_2.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                    _myPrefab_2.image = go.GetComponent<Image>();
+                    _myPrefab_2.zMyPrefab = go.GetComponent<ZMyPrefab>();
                     break;
                 }
                 // ZCODEBEHIND_CASE_FIN
