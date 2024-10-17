@@ -2,11 +2,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+// ReSharper disable InvertIf
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable CheckNamespace
 
@@ -15,11 +19,29 @@ public static class ZCodeBehindMenu
     [MenuItem("Z/CODE_BEHIND/SYNC")]
     public static async void Sync()
     {
-        var scenePath = SceneManager.GetActiveScene().path;
-        Debug.Log($"SYNC_START scenePath:{scenePath}");
-        var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-        var rootGoList = scene.GetRootGameObjects();
-        Debug.Log($"rootGoList:{rootGoList.Length}");
+        var scene = SceneManager.GetActiveScene();
+        
+        if (scene != null)
+        {
+            Debug.Log($"SYNC_START scene.path:{scene.path}");
+            var rootGoList = scene.GetRootGameObjects();
+            Debug.Log($"rootGoList:{rootGoList.Length}");
+            await _Run(rootGoList, scene.path, false);
+        }
+        
+        var prefab = PrefabStageUtility.GetCurrentPrefabStage();
+        
+        if (prefab != null)
+        {
+            Debug.Log($"SYNC_START prefab.assetPath:{prefab.assetPath}");
+            var rootGoList = new[] { prefab.prefabContentsRoot };
+            Debug.Log($"rootGoList:{rootGoList.Length}");
+            await _Run(rootGoList, prefab.assetPath, true);
+        }
+    }
+
+    private static async Task _Run(GameObject[] rootGoList, string assetPath, bool exportFieldPublic)
+    {
         var goCompDict = new Dictionary<string, List<string>>();
 
         foreach (var rootGo in rootGoList)
@@ -31,19 +53,19 @@ public static class ZCodeBehindMenu
         rootDirPath = Path.GetFullPath(rootDirPath);
         Debug.Log($"rootDirPath:{rootDirPath}");
 
-        var sceneName = Path.GetFileNameWithoutExtension(scenePath);
-        Debug.Log($"sceneName:{sceneName}");
-        var cbPath = Path.Combine(Path.GetDirectoryName(scenePath), $"ZCodeBehind/{sceneName}.zcb.cs");
+        var fileName = Path.GetFileNameWithoutExtension(assetPath);
+        Debug.Log($"fileName:{fileName}");
+        var cbPath = Path.Combine(Path.GetDirectoryName(assetPath), $"ZCodeBehind/{fileName}.zcb.cs");
         cbPath = Path.GetFullPath(cbPath);
         Debug.Log($"cbPath:{cbPath}:{File.Exists(cbPath)}");
         string[] fileLineList;
         var newFileLineList = new List<string>();
-        long newSceneFileLength;
+        long newFileLength;
 
         {
-            await using var fs = File.OpenRead(scenePath);
-            newSceneFileLength = fs.Length;
-            Debug.Log($"newSceneFileLength:{newSceneFileLength}");
+            await using var fs = File.OpenRead(assetPath);
+            newFileLength = fs.Length;
+            Debug.Log($"newFileLength:{newFileLength}");
         }
 
         if (File.Exists(cbPath))
@@ -53,9 +75,9 @@ public static class ZCodeBehindMenu
             var line = fileLineList.First(item => item.Contains("ZCODEBEHIND_SCENE_FILE_LENGTH"));
             var sceneFileLength = long.Parse(line.Replace("//", "").Replace("ZCODEBEHIND_SCENE_FILE_LENGTH", "").Trim());
 
-            if (sceneFileLength == newSceneFileLength)
+            if (sceneFileLength == newFileLength)
             {
-                Debug.Log($"SCENE_FILE_IS_IDENTICAL_SKIP scenePath:{scenePath}");
+                Debug.Log($"SCENE_FILE_IS_IDENTICAL_SKIP scenePath:{assetPath}");
                 return;
             }
         }
@@ -72,16 +94,17 @@ public static class ZCodeBehindMenu
         }
 
         var canSkip = false;
+        var underBarStr = exportFieldPublic ? "" : "_";
 
         foreach (var fileLine in fileLineList)
         {
             if (fileLine.Contains("ZCODEBEHIND_SCENE_FILE_LENGTH"))
             {
-                newFileLineList.Add($"// ZCODEBEHIND_SCENE_FILE_LENGTH {newSceneFileLength}");
+                newFileLineList.Add($"// ZCODEBEHIND_SCENE_FILE_LENGTH {newFileLength}");
             }
             else if (fileLine.Contains("%CLASS_NAME%"))
             {
-                newFileLineList.Add(fileLine.Replace("%CLASS_NAME%", sceneName));
+                newFileLineList.Add(fileLine.Replace("%CLASS_NAME%", fileName));
             }
             else if (fileLine.Contains("ZCODEBEHIND_FIELD_START"))
             {
@@ -92,9 +115,14 @@ public static class ZCodeBehindMenu
                 {
                     var goName = kv.Key;
                     var compNameList = kv.Value;
+                    
+                    if (goName == fileName)
+                        goName = "root";
+                    
                     var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
                     var fieldLine = "";
-                    fieldLine += "    private (GameObject go, ";
+                    var pubPrvStr = exportFieldPublic ? "public" : "private";
+                    fieldLine += $"    {pubPrvStr} (GameObject go, ";
 
                     foreach (var compName in compNameList)
                     {
@@ -103,7 +131,7 @@ public static class ZCodeBehindMenu
                     }
 
                     fieldLine = fieldLine.TrimEnd(' ', ',');
-                    fieldLine += $") _{goNameClean};";
+                    fieldLine += $") {underBarStr}{goNameClean};";
                     Debug.Log($"fieldLine:{fieldLine}");
                     newFileLineList.Add(fieldLine);
                 }
@@ -122,17 +150,21 @@ public static class ZCodeBehindMenu
                 {
                     var goName = kv.Key;
                     var compNameList = kv.Value;
+
+                    if (goName == fileName)
+                        goName = "root";
+                    
                     var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
                     newFileLineList.Add($"                case \"{goName}\":");
                     newFileLineList.Add($"                {{");
-                    newFileLineList.Add($"                    if (_{goNameClean}.go != null)");
+                    newFileLineList.Add($"                    if ({underBarStr}{goNameClean}.go != null)");
                     newFileLineList.Add($"                        break;");
-                    newFileLineList.Add($"                    _{goNameClean}.go = go;");
+                    newFileLineList.Add($"                    {underBarStr}{goNameClean}.go = go;");
 
                     foreach (var compName in compNameList)
                     {
                         var ccCompName = $"{compName[0].ToString().ToLower()}{compName[1..]}";
-                        newFileLineList.Add($"                    _{goNameClean}.{ccCompName} = go.GetComponent<{compName}>();");
+                        newFileLineList.Add($"                    {underBarStr}{goNameClean}.{ccCompName} = go.GetComponent<{compName}>();");
                     }
 
                     newFileLineList.Add($"                    break;");
