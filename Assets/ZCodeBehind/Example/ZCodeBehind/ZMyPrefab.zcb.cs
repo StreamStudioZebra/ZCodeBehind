@@ -25,12 +25,9 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
 
-// ZCODEBEHIND_SCENE_FILE_LENGTH 9717
-
 public partial class ZMyPrefab : MonoBehaviour
 {
     // ZCODEBEHIND_FIELD_START
-    public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image, ZMyPrefab zMyPrefab) root;
     public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) imgRed;
     public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) imgBlue;
     public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Text text, ContentSizeFitter contentSizeFitter) txtName;
@@ -39,24 +36,13 @@ public partial class ZMyPrefab : MonoBehaviour
 
     private void _InitializeComponent()
     {
-        var goList = Resources.FindObjectsOfTypeAll<GameObject>();
+        var goList = ZcbUtil.GetDescendantList(gameObject);
 
         foreach (var go in goList)
         {
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
-                case "ZMyPrefab":
-                {
-                    if (root.go != null)
-                        break;
-                    root.go = go;
-                    root.rectTransform = go.GetComponent<RectTransform>();
-                    root.canvasRenderer = go.GetComponent<CanvasRenderer>();
-                    root.image = go.GetComponent<Image>();
-                    root.zMyPrefab = go.GetComponent<ZMyPrefab>();
-                    break;
-                }
                 case "imgRed":
                 {
                     if (imgRed.go != null)
@@ -101,8 +87,8 @@ public partial class ZMyPrefab : MonoBehaviour
             }
         }
     }
-    
-    private void Start()
+        
+    private void Awake()
     {
         _InitializeComponent();
     }

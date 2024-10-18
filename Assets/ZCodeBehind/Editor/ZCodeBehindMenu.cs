@@ -110,6 +110,11 @@ public static class ZCodeBehindMenu
             {
                 newFileLineList.Add(fileLine.Replace("%CLASS_NAME%", fileName));
             }
+            else if (fileLine.Contains("%GO_LIST_QUERY%"))
+            {
+                var newLine = exportFieldPublic ? "var goList = ZcbUtil.GetDescendantList(gameObject);" : "var goList = Resources.FindObjectsOfTypeAll<GameObject>().ToList();";
+                newFileLineList.Add(fileLine.Replace("%GO_LIST_QUERY%", newLine));
+            }
             else if (fileLine.Contains("ZCODEBEHIND_FIELD_START"))
             {
                 canSkip = true;
@@ -121,7 +126,7 @@ public static class ZCodeBehindMenu
                     var compNameList = kv.Value;
 
                     if (goName == fileName)
-                        goName = "root";
+                        continue;
 
                     var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
                     var fieldLine = "";
@@ -154,11 +159,11 @@ public static class ZCodeBehindMenu
                 {
                     var goName = kv.Key;
                     var compNameList = kv.Value;
-                    var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
 
                     if (goName == fileName)
-                        goNameClean = "root";
+                        continue;
 
+                    var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
                     newFileLineList.Add($"                case \"{goName}\":");
                     newFileLineList.Add($"                {{");
                     newFileLineList.Add($"                    if ({underBarStr}{goNameClean}.go != null)");

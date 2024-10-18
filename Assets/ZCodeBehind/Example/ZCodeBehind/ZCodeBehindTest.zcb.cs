@@ -25,8 +25,6 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
 
-// ZCODEBEHIND_SCENE_FILE_LENGTH 39266
-
 public partial class ZCodeBehindTest : MonoBehaviour
 {
     // ZCODEBEHIND_FIELD_START
@@ -50,7 +48,7 @@ public partial class ZCodeBehindTest : MonoBehaviour
 
     private void _InitializeComponent()
     {
-        var goList = Resources.FindObjectsOfTypeAll<GameObject>();
+        var goList = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
 
         foreach (var go in goList)
         {
@@ -223,9 +221,9 @@ public partial class ZCodeBehindTest : MonoBehaviour
             }
         }
     }
-    
-    // private void Start()
-    // {
-    //     _InitializeComponent();
-    // }
+        
+    private void Awake()
+    {
+        _InitializeComponent();
+    }
 }

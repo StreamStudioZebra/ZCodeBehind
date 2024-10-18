@@ -33,7 +33,7 @@ public partial class %CLASS_NAME% : MonoBehaviour
 
     private void _InitializeComponent()
     {
-        var goList = Resources.FindObjectsOfTypeAll<GameObject>();
+        %GO_LIST_QUERY%
 
         foreach (var go in goList)
         {
@@ -53,8 +53,8 @@ public partial class %CLASS_NAME% : MonoBehaviour
             }
         }
     }
-    
-    private void Start()
+        
+    private void Awake()
     {
         _InitializeComponent();
     }
