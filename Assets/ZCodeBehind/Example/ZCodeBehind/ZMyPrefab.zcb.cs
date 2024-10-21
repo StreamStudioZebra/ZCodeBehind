@@ -24,7 +24,7 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
-using ZCodeBehind.Runtime;
+using ZCodeBehind;
 
 public partial class ZMyPrefab : MonoBehaviour
 {
