@@ -24,7 +24,6 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
-using ZCodeBehind;
 using ZCodeBehind.Runtime;
 
 public partial class ZMyPrefab : MonoBehaviour
@@ -37,7 +36,7 @@ public partial class ZMyPrefab : MonoBehaviour
     // ZCODEBEHIND_FIELD_FIN
     private (GameObject go, RectTransform rectTransform, Image image) _imgZCodeBehindTest;
 
-    private void _InitializeComponent()
+    public void InitializeComponent()
     {
         var goList = ZcbUtil.GetDescendantList(gameObject);
 
@@ -54,7 +53,7 @@ public partial class ZMyPrefab : MonoBehaviour
                 continue;
             }
             // ZCODEBEHIND_IF_ROOT_FIN
-
+                
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
@@ -102,9 +101,9 @@ public partial class ZMyPrefab : MonoBehaviour
             }
         }
     }
-
+        
     private void Awake()
     {
-        _InitializeComponent();
+        InitializeComponent();
     }
 }

@@ -24,6 +24,7 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
+using ZCodeBehind.Runtime;
 
 public partial class ZCodeBehindTest : MonoBehaviour
 {
@@ -46,12 +47,15 @@ public partial class ZCodeBehindTest : MonoBehaviour
     // ZCODEBEHIND_FIELD_FIN
     private (GameObject go, RectTransform rectTransform, Image image) _imgZCodeBehindTest;
 
-    private void _InitializeComponent()
+    public void InitializeComponent()
     {
         var goList = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
 
         foreach (var go in goList)
         {
+            // ZCODEBEHIND_IF_ROOT_START
+            // ZCODEBEHIND_IF_ROOT_FIN
+                
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
@@ -223,6 +227,6 @@ public partial class ZCodeBehindTest : MonoBehaviour
         
     private void Awake()
     {
-        _InitializeComponent();
+        InitializeComponent();
     }
 }

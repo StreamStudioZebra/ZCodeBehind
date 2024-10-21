@@ -32,7 +32,7 @@ public partial class %CLASS_NAME% : MonoBehaviour
     // ZCODEBEHIND_FIELD_FIN
     private (GameObject go, RectTransform rectTransform, Image image) _imgZCodeBehindTest;
 
-    private void _InitializeComponent()
+    public void InitializeComponent()
     {
         %GO_LIST_QUERY%
 
@@ -60,6 +60,6 @@ public partial class %CLASS_NAME% : MonoBehaviour
         
     private void Awake()
     {
-        _InitializeComponent();
+        InitializeComponent();
     }
 }
