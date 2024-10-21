@@ -35,12 +35,12 @@ public partial class %CLASS_NAME% : MonoBehaviour
     private void _InitializeComponent()
     {
         %GO_LIST_QUERY%
-        
-        // ZCODEBEHIND_IF_ROOT_START
-        // ZCODEBEHIND_IF_ROOT_FIN
 
         foreach (var go in goList)
         {
+            // ZCODEBEHIND_IF_ROOT_START
+            // ZCODEBEHIND_IF_ROOT_FIN
+                
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
