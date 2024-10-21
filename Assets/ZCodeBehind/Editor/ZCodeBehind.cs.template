@@ -24,6 +24,7 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine;
+using ZCodeBehind.Runtime;
 
 public partial class %CLASS_NAME% : MonoBehaviour
 {

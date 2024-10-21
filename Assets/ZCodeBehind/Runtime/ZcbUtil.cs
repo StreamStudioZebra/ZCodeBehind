@@ -2,9 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-// ReSharper disable CheckNamespace
-
-namespace ZCodeBehind
+namespace ZCodeBehind.Runtime
 {
     public static class ZcbUtil
     {
