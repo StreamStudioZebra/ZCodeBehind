@@ -2,24 +2,27 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ZcbUtil
+namespace ZCodeBehind.Runtime
 {
-    public static List<GameObject> GetDescendantList(GameObject goParent)
+    public static class ZcbUtil
     {
-        var goList = Resources.FindObjectsOfTypeAll<GameObject>().Where(go =>
+        public static List<GameObject> GetDescendantList(GameObject goParent)
         {
-            while (true)
+            var goList = Resources.FindObjectsOfTypeAll<GameObject>().Where(go =>
             {
-                if (go == goParent)
-                    return true;
+                while (true)
+                {
+                    if (go == goParent)
+                        return true;
 
-                if (go.transform.parent == null)
-                    return false;
+                    if (go.transform.parent == null)
+                        return false;
 
-                go = go.transform.parent.gameObject;
-            }
-        }).ToList();
+                    go = go.transform.parent.gameObject;
+                }
+            }).ToList();
 
-        return goList;
+            return goList;
+        }
     }
 }
