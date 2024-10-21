@@ -125,17 +125,20 @@ namespace ZCodeBehind.Editor
                     {
                         var goName = kv.Key;
                         var compNameList = kv.Value;
-
-                        if (goName == fileName)
-                            continue;
-
-                        var goNameClean = Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
+                        
+                        var goNameClean = goName == fileName ? 
+                            "root" : 
+                            Regex.Replace(goName, @"[^a-zA-Z0-9_]", "");
+                        
                         var fieldLine = "";
                         var pubPrvStr = exportFieldPublic ? "public" : "private";
                         fieldLine += $"    {pubPrvStr} (GameObject go, ";
 
                         foreach (var compName in compNameList)
                         {
+                            if (compName == fileName)
+                                continue;
+                            
                             var ccCompName = $"{compName[0].ToString().ToLower()}{compName[1..]}";
                             fieldLine += $"{compName} {ccCompName}, ";
                         }
@@ -150,6 +153,42 @@ namespace ZCodeBehind.Editor
                 {
                     canSkip = false;
                     newFileLineList.Add($"    // ZCODEBEHIND_FIELD_FIN");
+                }
+                else if (fileLine.Contains("ZCODEBEHIND_IF_ROOT_START"))
+                {
+                    canSkip = true;
+                    newFileLineList.Add($"            // ZCODEBEHIND_IF_ROOT_START");
+
+                    foreach (var kv in goCompDict)
+                    {
+                        var goName = kv.Key;
+                        var compNameList = kv.Value;
+
+                        if (goName != fileName)
+                            continue;
+
+                        newFileLineList.Add($"            if (go == gameObject)");
+                        newFileLineList.Add($"            {{");
+                        newFileLineList.Add($"                if (root.go != null)");
+                        newFileLineList.Add($"                    break;");
+                        
+                        foreach (var compName in compNameList)
+                        {
+                            if (compName == fileName)
+                                continue;
+                            
+                            var ccCompName = $"{compName[0].ToString().ToLower()}{compName[1..]}";
+                            newFileLineList.Add($"                root.{ccCompName} = go.GetComponent<{compName}>();");
+                        }
+                        
+                        newFileLineList.Add($"                continue;");
+                        newFileLineList.Add($"            }}");
+                    }
+                }
+                else if (fileLine.Contains("ZCODEBEHIND_IF_ROOT_FIN"))
+                {
+                    canSkip = false;
+                    newFileLineList.Add($"            // ZCODEBEHIND_IF_ROOT_FIN");
                 }
                 else if (fileLine.Contains("ZCODEBEHIND_CASE_START"))
                 {
@@ -173,6 +212,9 @@ namespace ZCodeBehind.Editor
 
                         foreach (var compName in compNameList)
                         {
+                            if (compName == fileName)
+                                continue;
+                            
                             var ccCompName = $"{compName[0].ToString().ToLower()}{compName[1..]}";
                             newFileLineList.Add($"                    {underBarStr}{goNameClean}.{ccCompName} = go.GetComponent<{compName}>();");
                         }

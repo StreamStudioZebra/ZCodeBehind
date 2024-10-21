@@ -30,6 +30,7 @@ using ZCodeBehind.Runtime;
 public partial class ZMyPrefab : MonoBehaviour
 {
     // ZCODEBEHIND_FIELD_START
+    public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) root;
     public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) imgRed;
     public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) imgBlue;
     public (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Text text, ContentSizeFitter contentSizeFitter) txtName;
@@ -42,6 +43,18 @@ public partial class ZMyPrefab : MonoBehaviour
 
         foreach (var go in goList)
         {
+            // ZCODEBEHIND_IF_ROOT_START
+            if (go == gameObject)
+            {
+                if (root.go != null)
+                    break;
+                root.rectTransform = go.GetComponent<RectTransform>();
+                root.canvasRenderer = go.GetComponent<CanvasRenderer>();
+                root.image = go.GetComponent<Image>();
+                continue;
+            }
+            // ZCODEBEHIND_IF_ROOT_FIN
+
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
@@ -89,7 +102,7 @@ public partial class ZMyPrefab : MonoBehaviour
             }
         }
     }
-        
+
     private void Awake()
     {
         _InitializeComponent();

@@ -31,7 +31,7 @@ public partial class ZCodeBehindTest : MonoBehaviour
     private (GameObject go, Transform transform) _COMMON;
     private (GameObject go, Transform transform, Camera camera, AudioListener audioListener, UniversalAdditionalCameraData universalAdditionalCameraData) _mainCam;
     private (GameObject go, Transform transform, EventSystem eventSystem, StandaloneInputModule standaloneInputModule) _eventSystem;
-    private (GameObject go, Transform transform, ZCodeBehindTest zCodeBehindTest) _mainScript;
+    private (GameObject go, Transform transform) _mainScript;
     private (GameObject go, RectTransform rectTransform, Canvas canvas, CanvasScaler canvasScaler, GraphicRaycaster graphicRaycaster) _cvMain;
     private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgBg;
     private (GameObject go, RectTransform rectTransform, CanvasRenderer canvasRenderer, Image image) _imgFg;
@@ -90,7 +90,6 @@ public partial class ZCodeBehindTest : MonoBehaviour
                         break;
                     _mainScript.go = go;
                     _mainScript.transform = go.GetComponent<Transform>();
-                    _mainScript.zCodeBehindTest = go.GetComponent<ZCodeBehindTest>();
                     break;
                 }
                 case "cvMain":
