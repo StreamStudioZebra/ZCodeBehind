@@ -38,7 +38,7 @@ public partial class ZMyPrefab : MonoBehaviour
 
     public void InitializeComponent()
     {
-        var goList = ZcbUtil.GetDescendantList(gameObject);
+        var goList = ZcbUtil.GetAllObjList(gameObject);
 
         foreach (var go in goList)
         {
@@ -53,7 +53,7 @@ public partial class ZMyPrefab : MonoBehaviour
                 continue;
             }
             // ZCODEBEHIND_IF_ROOT_FIN
-                
+
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
@@ -101,7 +101,7 @@ public partial class ZMyPrefab : MonoBehaviour
             }
         }
     }
-        
+
     private void Awake()
     {
         InitializeComponent();

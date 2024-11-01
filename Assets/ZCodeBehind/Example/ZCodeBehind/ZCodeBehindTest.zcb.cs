@@ -49,13 +49,13 @@ public partial class ZCodeBehindTest : MonoBehaviour
 
     public void InitializeComponent()
     {
-        var goList = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
+        var goList = ZcbUtil.GetAllObjListInCurScene();
 
         foreach (var go in goList)
         {
             // ZCODEBEHIND_IF_ROOT_START
             // ZCODEBEHIND_IF_ROOT_FIN
-                
+
             switch (go.name)
             {
                 // ZCODEBEHIND_CASE_START
@@ -224,7 +224,7 @@ public partial class ZCodeBehindTest : MonoBehaviour
             }
         }
     }
-        
+
     private void Awake()
     {
         InitializeComponent();
