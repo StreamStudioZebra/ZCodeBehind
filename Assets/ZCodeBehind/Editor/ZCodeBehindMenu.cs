@@ -17,7 +17,7 @@ namespace ZCodeBehind.Editor
 {
     public static class ZCodeBehindMenu
     {
-        [MenuItem("Z/CODE_BEHIND/SYNC")]
+        [MenuItem("Z/CODE_BEHIND_SYNC")]
         public static async void Sync()
         {
             var scene = SceneManager.GetActiveScene();
@@ -115,7 +115,7 @@ namespace ZCodeBehind.Editor
                 {
                     var newLine = exportFieldPublic ?
                         "var goList = ZcbUtil.GetAllObjList(gameObject);" :
-                        "var goList = ZcbUtil.GetAllObjListInCurScene();";
+                        "var goList = ZcbUtil.GetAllObjListInScene(GetType().Name);";
                     newFileLineList.Add(fileLine.Replace("%GO_LIST_QUERY%", newLine));
                 }
                 else if (fileLine.Contains("ZCODEBEHIND_FIELD_START"))
@@ -256,6 +256,9 @@ namespace ZCodeBehind.Editor
                     Debug.Log($"comp:{comp.GetType().Name}");
                     goCompDict[go.name].Add(comp.GetType().Name);
                 }
+
+                var tmp = new HashSet<string>(goCompDict[go.name]);
+                goCompDict[go.name] = tmp.ToList();
             }
 
             foreach (Transform childTr in go.transform)

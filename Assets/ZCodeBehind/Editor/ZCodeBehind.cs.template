@@ -57,9 +57,4 @@ public partial class %CLASS_NAME% : MonoBehaviour
             }
         }
     }
-        
-    private void Awake()
-    {
-        InitializeComponent();
-    }
 }
